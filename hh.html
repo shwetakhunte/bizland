@@ -1,0 +1,396 @@
+<?php /* Template Name: CustomPage */ ?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet">
+
+<style>
+    .logo img {
+        width: 100px;
+    }
+
+    .topnav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgb(0 0 0 / 0%);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1em 5em;
+        z-index: 3;
+
+    }
+
+    .nav {
+        margin: 0em 10em
+    }
+
+    ;
+
+    .topnav.show {
+        opacity: 1;
+        /* Show navigation bar when curtain is open */
+    }
+
+    .topnav a {
+        color: white;
+        margin: 0 15px;
+        font-size: 1em;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .topnav a:hover {
+        color: #cb3522;
+    }
+
+
+
+
+    /* Basic Styling */
+    body {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        background: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        font-family: "Playfair Display", serif;
+    }
+
+    .v-sec {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .mvideo {
+        display: none;
+    }
+
+    /* Modern Intro Text Animation with Staggered Effect */
+    #intro-text {
+        font-family: "Playfair Display", serif;
+        z-index: 2;
+        position: absolute;
+        top: 68%;
+        font-size: 3em;
+        text-align: center;
+        width: 80%;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        opacity: 1;
+    }
+
+    #intro-text span {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: letter-fade-slide 1s ease forwards;
+        animation-delay: calc(var(--i) * 0.1s);
+    }
+
+    @keyframes letter-fade-slide {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Modern Button Animation */
+    #starter {
+        z-index: 1;
+        position: absolute;
+        top: 80%;
+        width: 80%;
+        max-width: 300px;
+        height: 50px;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #cb352200;
+        color: white;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        padding: 10px;
+        opacity: 0;
+        animation: button-fade-in 1.5s ease-out forwards;
+        animation-delay: 3s;
+        text-decoration: none;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        font-family: "Playfair Display", serif;
+    }
+
+    #starter:hover {
+        background-color: #cb352200;
+        transform: scale(1.05);
+    }
+
+    .btn {
+        color: #000;
+        background: #ffffff;
+        position: absolute;
+        top: 36rem;
+        left: 43rem;
+        padding: 1rem 4rem;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    @keyframes button-fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Curtain Styling */
+    #scene {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 100vw;
+        height: 100vh;
+        transform: translate(-50%, -50%);
+        background-color: black;
+        box-shadow: 0 0 0 0px white inset;
+        overflow: hidden;
+    }
+
+    #curtain {
+        width: 100%;
+        height: 100%;
+    }
+
+    #curtain .left,
+    #curtain .right {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background-image: url("https://tgwc1853.com/TGWC/wp-content/uploads/2024/11/bg-stage.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    #curtain .left {
+        left: 0;
+        transform-origin: top right;
+        z-index: 999;
+        height: 100vh;
+    }
+
+    #curtain .right {
+        left: 50%;
+        transform-origin: top left;
+        z-index: 999;
+        height: 100vh;
+    }
+
+    /* Refined "TGWC" Title Animation */
+    h1 {
+        position: absolute;
+        left: 35%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 10vw;
+        color: white;
+        opacity: 0;
+        animation: fade-in 2s ease-out forwards;
+        animation-delay: 6s;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #scene.expand .left {
+        animation: left-curtain-opening 4s ease-in-out forwards;
+    }
+
+    #scene.expand .right {
+        animation: right-curtain-opening 4s ease-in-out forwards;
+    }
+
+    @keyframes left-curtain-opening {
+        from {
+            transform: translate(0) rotate(0) scale(1, 1);
+        }
+
+        to {
+            transform: translate(-100%) rotate(20deg) scale(0, 2);
+        }
+    }
+
+    @keyframes right-curtain-opening {
+        from {
+            transform: translate(0) rotate(0) scale(1, 1);
+        }
+
+        to {
+            transform: translate(100%) rotate(-20deg) scale(0, 2);
+        }
+    }
+
+    /* Media Queries for Mobile Optimization */
+    @media (max-width: 768px) {
+        #intro-text {
+            top: 25%;
+            font-size: 1.5em;
+        }
+
+        #starter {
+            top: 60%;
+            font-size: 1.2em;
+            padding: 8px;
+        }
+
+        h1 {
+            font-size: 15vw;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #intro-text {
+            top: 40%;
+            font-size: 1.8em;
+        }
+
+        #starter {
+            top: 50%;
+            font-size: 1em;
+            padding: 6px;
+        }
+
+        h1 {
+            font-size: 20vw;
+            left: 25%;
+        }
+
+        .btn {
+            color: #000;
+            background: #ffffff;
+            position: absolute;
+            top: 30rem;
+            left: 5rem;
+            display: flex;
+            padding: 1rem 4rem;
+            font-size: 20px;
+            justify-content: center;
+            text-decoration: none;
+            align-items: center;
+        }
+
+        .mvideo {
+            display: block;
+        }
+
+        .dvideo {
+            display: block;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <!-- Intro Text with Staggered Animation -->
+    <div id="intro-text">
+        <!-- Each letter is wrapped in a span for staggered animation -->
+        <span style="--i:1">D</span>
+        <span style="--i:2">a</span>
+        <span style="--i:3">s</span>
+        <span>&nbsp;</span>
+        <span style="--i:4">L</span>
+        <span style="--i:5">e</span>
+        <span style="--i:6">b</span>
+        <span style="--i:7">e</span>
+        <span style="--i:8">n</span>
+        <span>&nbsp;</span>
+        <span style="--i:9">i</span>
+        <span style="--i:10">s</span>
+        <span style="--i:11">t</span>
+        <span>&nbsp;</span>
+        <span style="--i:12">s</span>
+        <span style="--i:13">c</span>
+        <span style="--i:14">h</span>
+        <span style="--i:15">ö</span>
+        <span style="--i:16">n</span>
+    </div>
+
+    <!-- Button to Open Curtain -->
+    <button id="starter" onclick="showTime()">Come Inside</button>
+
+    <!-- Curtain Scene -->
+    <div id="scene">
+        <div id="curtain" class="dvideo">
+
+
+
+            <video class="v-sec" autoplay muted loop>
+                <source src="https://tgwc1853.com/TGWC/wp-content/uploads/2024/11/video-home-1.mp4" type="video/mp4">
+            </video>
+
+            <!--<h1>Tgwc</h1>-->
+            <div class="topnav" id="topnav">
+                <div class="logo"><img src="https://tgwc1853.com/TGWC/wp-content/uploads/2024/11/TGWC-white-1.png" />
+                </div>
+                <div class="nav">
+                    <a href="#home">About Us</a>
+                    <a href="#projects">Products</a>
+
+                </div>
+
+                <a href="https://tgwc1853.com/TGWC/about/" class="btn button">Know More</a>
+                <div class="left"></div>
+                <div class="right"></div>
+            </div>
+
+
+           
+
+
+        </div>
+        </div>
+
+        <script>
+            function showTime() {
+                // Hide intro text and button
+                document.getElementById("intro-text").style.display = "none";
+                document.getElementById("starter").style.display = "none";
+
+                // Trigger curtain opening animation
+                var scene = document.getElementById("scene");
+                scene.classList.add("expand");
+
+                // Show "Tgwc" text after curtain opens
+
+            }
+        </script>
